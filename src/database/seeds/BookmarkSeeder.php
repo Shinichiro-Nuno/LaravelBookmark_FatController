@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 
 class BookmarkSeeder extends Seeder
 {
-    public function __invoke()
+    public function __invoke(array $parameters = [])
     {
         /**
          * シーダーの内容
@@ -26,7 +26,7 @@ class BookmarkSeeder extends Seeder
         $factory_ids = [];
 
         for ($i = 0; $i < 30; $i++) {
-            $user_ids[] = factory(User::class)->create()->id;
+            $user_ids[] = User::factory()->create()->id;
         }
         $first_user_id = User::query()->first()->id;
 
@@ -34,13 +34,13 @@ class BookmarkSeeder extends Seeder
         for ($i = 0; $i < 30; $i++) {
             $category = $tech_categories[$i];
 
-            $factory_ids[] = factory(BookmarkCategory::class)->create([
+            $factory_ids[] = BookmarkCategory::factory()->create([
                 'display_name' => $category ?? 'テスト用カテゴリ',
                 'slug' => $category ?? 'test-category-' . Str::random(6),
             ])->id;
         }
 
-        $first_category_id = BookmarkCategory::query()->first()->id;
+        $first_category_id = $factory_ids[0];
 
         $user_bookmark_counts = [30, 50, 67, 77, 87, 92, 97, 99, 100];
         $category_bookmark_counts = [13, 25, 36, 46, 55, 64, 72, 79, 85, 90, 94, 97, 99, 100];
@@ -65,10 +65,10 @@ class BookmarkSeeder extends Seeder
                 continue;
             }
 
-            factory(Bookmark::class)->create([
+            Bookmark::factory()->create([
                 'user_id' => $user_id,
                 'category_id' => $category_id,
-                'page_title' => "{$tech_categories[$category_id - 1]}の記事タイトル",
+                'page_title' => "{$tech_categories[$category_id - $factory_ids[0]]}の記事タイトル",
                 'created_at' => now()->addDays($i)
             ]);
         }

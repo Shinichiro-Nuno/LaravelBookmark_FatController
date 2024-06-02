@@ -16,6 +16,7 @@ services:
       - ./docker/https-portal/cert:/var/lib/https-portal
     depends_on:
       - web
+    restart: always
 
   app:
     container_name: bookmark-app
