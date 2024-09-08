@@ -26,7 +26,7 @@
                     <div class="bookmark-card">
                         <figure class="bookmark-image">
                             <img src="{{ $bookmark->page_thumbnail_url }}" alt="{{ $bookmark->page_title }}"
-                                 class="bookmark-image__img">
+                                class="bookmark-image__img">
                         </figure>
                         <div class="bookmark-body-area">
                             <div class="bookmark-tag">
